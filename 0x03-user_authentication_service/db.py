@@ -27,7 +27,7 @@ class DB:
 
     def add_user(self, email: str, hashed_password: str) -> User:
         """ Add a user to the database: No validation required """
-        sess = _session(self)
         user_obj = User(email=email, hashed_password=hashed_password)
-        sess.add(user_obj)
+        self._session.add(user_obj)
+        self._session.commit()
         return user_obj
