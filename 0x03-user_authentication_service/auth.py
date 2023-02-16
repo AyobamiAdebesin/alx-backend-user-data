@@ -30,6 +30,6 @@ class Auth:
         else:
             # Hash the password
             user_hashed_pwd = _hash_password(password=password)
-        # Add the user into the database 
+        # Add the user into the database
         user = self._db.add_user(email=email, hashed_password=user_hashed_pwd)
         return user
