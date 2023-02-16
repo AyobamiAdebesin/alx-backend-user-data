@@ -48,3 +48,19 @@ class DB:
                 return user
             else:
                 raise NoResultFound
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """ Update user from in the database """
+        all_users = self._session.query(User).all()
+
+        # Get user by id
+        for user in all_users:
+            if user_id == user.id:
+                user_obj = user
+        # Set new attributes with kwargs
+        for k, v in kwargs.items():
+            if k not in User.__dict__:
+                raise ValueError
+            setattr(user_obj, k, v)
+        self._session.add(user_obj)
+        self._session.commit()
