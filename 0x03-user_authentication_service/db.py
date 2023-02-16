@@ -4,6 +4,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
+from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.orm.exc import NoResultFound
 
 from user import Base, User
 
@@ -31,3 +33,16 @@ class DB:
         self._session.add(user_obj)
         self._session.commit()
         return user_obj
+
+    def find_user_by(self, **kwargs) -> User:
+        """ Find user in the database """
+        # Verify that we receive valid arguments
+        for k, v in kwargs.values():
+            if k != 'email' or v != 'hashed_password':
+                raise InvalidRequestError
+        # Check if the object is found in the database
+        for user in self._session.query(User).all():
+            if user.email in kwargs.values():
+                return user
+            else:
+                return NoResultFound
