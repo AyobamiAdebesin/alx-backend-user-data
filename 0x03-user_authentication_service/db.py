@@ -37,11 +37,9 @@ class DB:
     def find_user_by(self, **kwargs) -> User:
         """ Find user in the database """
         # Verify that we receive valid arguments
-        valid_args = ['email', 'hashed_password']
-        if len(kwargs) > 1:
-            for k, _ in kwargs.items():
-                if k not in valid_args:
-                    raise InvalidRequestError
+        for k, _ in kwargs.items():
+            if k not in User.__dict__:
+                raise InvalidRequestError
         # Check if the object is found in the database
         for user in self._session.query(User).all():
             if user.email in kwargs.values():
