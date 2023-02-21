@@ -35,17 +35,34 @@ class DB:
         return user_obj
 
     def find_user_by(self, **kwargs) -> User:
-        """ Find user in the database """
-        # Verify that we receive valid arguments
-        for k, _ in kwargs.items():
+        """
+        Return a user who has an attribute matching the attributes passed
+        as arguments
+        Args:
+            attributes (dict): a dictionary of attributes to match the user
+        Return:
+            matching user or raise error
+        """
+        all_users = self._session.query(User)
+        for k, v in kwargs.items():
             if k not in User.__dict__:
                 raise InvalidRequestError
-        # Check if the object is found in the database
-        for user in self._session.query(User).all():
-            if user.email in kwargs.values():
-                return user
-            else:
-                raise NoResultFound
+            for usr in all_users:
+                if getattr(usr, k) == v:
+                    return usr
+        raise NoResultFound
+    # def find_user_by(self, **kwargs) -> User:
+    #     """ Find user in the database """
+    #     # Verify that we receive valid arguments
+    #     for k, _ in kwargs.items():
+    #         if k not in User.__dict__:
+    #             raise InvalidRequestError
+    #     # Check if the object is found in the database
+    #     for user in self._session.query(User).all():
+    #         if user.email in kwargs.values():
+    #             return user
+    #         else:
+    #             raise NoResultFound
 
     def update_user(self, user_id: int, **kwargs) -> None:
         """ Update user from in the database """
