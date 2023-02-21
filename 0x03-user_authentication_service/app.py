@@ -5,7 +5,7 @@ from flask import jsonify
 app = Flask(__name__)
 
 
-@app.route("/", [GET])
+@app.route("/", methods=['GET'])
 def test_flask():
     """ Create a basic flask app"""
     return jsonify({"message": "Bienvenue"})
