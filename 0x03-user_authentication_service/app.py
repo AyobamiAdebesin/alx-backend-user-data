@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route("/", [GET])
 def test_flask():
     """ Create a basic flask app"""
-    return jsonify({"message", "Bienvenue"})
+    return jsonify({"message": "Bienvenue"})
 
 
 if __name__ == "__main__":
