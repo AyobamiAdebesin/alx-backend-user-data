@@ -17,6 +17,14 @@ def _hash_password(password: str) -> bytes:
     return hashpw(pwd_bytes, salt)
 
 
+def _generate_uuid() -> str:
+    """
+    Generating a unique ID and returns a string
+    representation of the ID
+    """
+    return str(uuid4())
+
+
 class Auth:
     """ Auth class to interact with the authentication database """
     def __init__(self):
@@ -45,10 +53,3 @@ class Auth:
             return False
         else:
             return (checkpw(password.encode('utf-8'), user.hashed_password))
-
-    def _generate_uuid(self) -> str:
-        """
-        Generating a unique ID and returns a string
-        representation of the ID
-        """
-        return str(uuid4())
