@@ -46,6 +46,6 @@ class Auth:
         else:
             return (checkpw(password.encode('utf-8'), user.hashed_password))
     
-    def _generate_uuid(self):
-        """ Generating a unique ID """
+    def _generate_uuid(self) -> str:
+        """ Generating a unique ID and returns a string representation of the ID"""
         return str(uuid4())
