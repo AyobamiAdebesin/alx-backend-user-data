@@ -24,9 +24,10 @@ class Auth:
 
     def register_user(self, email: str, password: str) -> User:
         """ Register a user in the database """
-        # Check if user exists in the database
+        # Check if user exists in the database with their email
+        # We can't check with password as it is encrypted
         try:
-            self._db.find_user_by(email=email, password=password)
+            self._db.find_user_by(email=email)
         except NoResultFound:
             # Hash the password
             user_hashed_pwd = _hash_password(password=password)
