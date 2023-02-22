@@ -4,6 +4,7 @@ from bcrypt import hashpw, gensalt, checkpw
 from db import DB
 from user import User
 from uuid import uuid4
+from typing import Union
 from sqlalchemy.orm.exc import NoResultFound
 
 
@@ -64,3 +65,13 @@ class Auth:
             user_sess_id = _generate_uuid()
             self._db.update_user(user_id=user.id, session_id=user_sess_id)
             return user_sess_id
+    
+    def get_user_from_session(self, session_id: str) -> Union[User, None]:
+        """ Get a user using the session id """
+        if session_id is not None:
+            try:
+                self._db.find_user_by(session_id=session_id)
+            except NoResultFound:
+                return None
+        else:
+            return None
