@@ -18,7 +18,7 @@ def test_flask():
 
 
 @app.route("/users", methods=['POST'])
-def register_users():
+def users():
     """ Registers a user """
     email = request.form.get("email")
     password = request.form.get("password")
@@ -31,7 +31,7 @@ def register_users():
 
 
 @app.route("/sessions", methods=["POST"], strict_slashes=False)
-def login_user() -> str:
+def login() -> str:
     """ Login functionality """
     email = request.form.get('email')
     password = request.form.get('password')
@@ -45,7 +45,7 @@ def login_user() -> str:
 
 
 @app.route("/sessions", methods=['DELETE'], strict_slashes=False)
-def logout_user():
+def logout():
     """ Log out a user """
     session_id = request.cookies.get('session_id')
     user = AUTH.get_user_from_session_id(session_id)
@@ -57,7 +57,7 @@ def logout_user():
 
 
 @app.route("/profile", methods=['GET'])
-def get_profile():
+def profile():
     """ Route to the profile page """
     session_id = request.cookies.get('session_id')
     if session_id is None:
@@ -70,7 +70,7 @@ def get_profile():
 
 
 @app.route("/reset_password", methods=['POST'])
-def reset_password():
+def get_reset_password_token():
     """ Reset password """
     email = request.form.get('email')
     reset_token = None
@@ -81,6 +81,21 @@ def reset_password():
     if reset_token is None:
         abort(403)
     return jsonify({"email": email, "reset_token": reset_token})
+
+
+@app.route("/reset_password", methods=['PUT'])
+def update_password():
+    """ Update a user's password """
+    email = request.form.get('email')
+    reset_token = request.form.get('reset_token')
+    new_password = request.form.get('new_password')
+
+    try:
+        AUTH.update_password(reset_token, new_password)
+    except ValueError:
+        abort(403)
+    else:
+        return jsonify({"email": email, "message": "Password updated"})
 
 
 if __name__ == "__main__":
