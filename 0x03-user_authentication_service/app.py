@@ -51,7 +51,7 @@ def logout_user():
     user = AUTH.get_user_from_session_id(session_id)
     if user is not None:
         AUTH.destroy_session(user.id)
-        redirect(url_for('test_flask'), code=301)
+        redirect("/")
     else:
         abort(403)
 
