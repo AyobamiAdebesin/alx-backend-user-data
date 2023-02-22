@@ -29,15 +29,16 @@ def register_users():
         return jsonify({"email": email, "message": "user created"})
 
 
-@app.route("/sessions")
-def login():
+@app.route("/sessions", methods=["POST"], strict_slashes=False)
+def login_user() -> str:
     """ Login functionality """
     email = request.form.get('email')
     password = request.form.get('password')
     if AUTH.valid_login(email, password) is True:
-        create_sess = AUTH.create_session(email)
-        make_response().set_cookie("session_id", create_sess)
-        return jsonify({"email": email, "message": "logged in"})
+        get_sess_id = AUTH.create_session(email)
+        response = jsonify({"email": email, "message": "logged in"})
+        response.set_cookie("session_id", get_sess_id)
+        return response
     else:
         abort(401)
 
