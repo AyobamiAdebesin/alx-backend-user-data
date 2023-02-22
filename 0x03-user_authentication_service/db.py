@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ DB module """
-from sqlalchemy import create_engine, tuple_
+from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
@@ -34,33 +34,33 @@ class DB:
         self._session.commit()
         return user_obj
 
-    def find_user_by(self, **kwargs) -> User:
-        """Finds a user based on a set of filters.
-        """
-        fields, values = [], []
-        for key, value in kwargs.items():
-            if hasattr(User, key):
-                fields.append(getattr(User, key))
-                values.append(value)
-            else:
-                raise InvalidRequestError()
-        result = self._session.query(User).filter(
-            tuple_(*fields).in_([tuple(values)])
-        ).first()
-        if result is None:
-            raise NoResultFound()
-        return result
     # def find_user_by(self, **kwargs) -> User:
-    #     """ Find user in the database """
-    #     # Verify that we receive valid arguments
-    #     for k, v in kwargs.items():
-    #         if k not in User.__dict__:
-    #             raise InvalidRequestError
-    #         # Check if the object is found in the database
-    #         for user in self._session.query(User).all():
-    #             if getattr(user, k) == v:
-    #                 return user
-    #     raise NoResultFound
+    #     """Finds a user based on a set of filters.
+    #     """
+    #     fields, values = [], []
+    #     for key, value in kwargs.items():
+    #         if hasattr(User, key):
+    #             fields.append(getattr(User, key))
+    #             values.append(value)
+    #         else:
+    #             raise InvalidRequestError()
+    #     result = self._session.query(User).filter(
+    #         tuple_(*fields).in_([tuple(values)])
+    #     ).first()
+    #     if result is None:
+    #         raise NoResultFound()
+    #     return result
+    def find_user_by(self, **kwargs) -> User:
+        """ Find user in the database """
+        # Verify that we receive valid arguments
+        for k, v in kwargs.items():
+            if k not in User.__dict__:
+                raise InvalidRequestError
+            # Check if the object is found in the database
+            for user in self._session.query(User).all():
+                if getattr(user, k) == v:
+                    return user
+        raise NoResultFound
 
     def update_user(self, user_id: int, **kwargs) -> None:
         """ Update user from in the database """
