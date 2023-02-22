@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """ Encrypting a password with an hash function """
-from bcrypt import hashpw, gensalt
+from bcrypt import hashpw, gensalt, checkpw
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
@@ -25,7 +25,7 @@ class Auth:
     def register_user(self, email: str, password: str) -> User:
         """ Register a user in the database """
         # Check if user exists in the database with their email
-        # We can't check with password as it is encrypted
+        # email suffices to check if a user exists or not
         try:
             self._db.find_user_by(email=email)
         except NoResultFound:
@@ -35,3 +35,12 @@ class Auth:
             user = self._db.add_user(email, user_hashed_pwd)
             return user
         raise ValueError(f"User {email} already exists")
+
+    def valid_login(self, email: str, password: str) -> bool:
+        """ Validate credentials of a user before log in """
+        try:
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            return False
+        else:
+            return (checkpw(password.encode('utf-8'), user.hashed_password))
