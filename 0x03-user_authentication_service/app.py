@@ -73,12 +73,14 @@ def get_profile():
 def reset_password():
     """ Reset password """
     email = request.form.get('email')
-    user = AUTH._db.find_user_by(email=email)
-    if user is not None:
+    reset_token = None
+    try:
         reset_token = AUTH.get_reset_password_token(email)
-        return jsonify({"email": email, "reset_token": reset_token})
-    else:
+    except ValueError:
+        reset_token = None
+    if reset_token is None:
         abort(403)
+    return jsonify({"email": email, "reset_token": reset_token})
 
 
 if __name__ == "__main__":
