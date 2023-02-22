@@ -37,16 +37,14 @@ class DB:
     def find_user_by(self, **kwargs) -> User:
         """ Find user in the database """
         # Verify that we receive valid arguments
-        for k, _ in kwargs.items():
+        for k, v in kwargs.items():
             if k not in User.__dict__:
                 raise InvalidRequestError
-        # Check if the user is found in the database
-        for user in self._session.query(User).all():
-            # We check with email alone.
-            if user.email in kwargs.values():
-                return user
-            else:
-                raise NoResultFound
+            # Check if the object is found in the database
+            for user in self._session.query(User).all():
+                if getattr(user, k) == v:
+                    return user
+        raise NoResultFound
 
     def update_user(self, user_id: int, **kwargs) -> None:
         """ Update user from in the database """
