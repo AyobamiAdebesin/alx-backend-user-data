@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """ Flask App """
 from flask import Flask
-from flask import jsonify
+from flask import jsonify, request, abort, redirect
 from auth import Auth
 
 
-AUTH = AUTH()
+AUTH = Auth()
 app = Flask(__name__)
 
 
@@ -16,8 +16,10 @@ def test_flask():
 
 
 @app.route("/users", methods=['POST'])
-def register_users(email, password):
+def register_users():
     """ Registers a user """
+    email = request.form.get("email")
+    password = request.form.get("password")
     try:
         user = AUTH.register_user(email=email, password=password)
     except ValueError:
