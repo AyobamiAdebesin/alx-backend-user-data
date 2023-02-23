@@ -40,7 +40,7 @@ def forbidden(error) -> str:
 
 
 @app.before_request
-def filter_request(request):
+def filter_request():
     """
     Filter the request to retrive the
     authentication details
