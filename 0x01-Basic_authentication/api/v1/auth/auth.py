@@ -25,6 +25,9 @@ class Auth:
                 path = path+slash_tolerant
                 if path in excluded_paths:
                     return False
+            if path not in excluded_paths:
+                return True
+            
         else:
             return True
 
