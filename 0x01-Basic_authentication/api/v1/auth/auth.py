@@ -12,7 +12,7 @@ class Auth:
 
         excluded_paths contains string path always ending by a "/"
         """
-        slash_tolerant = "{}/"
+        slash_tolerant = "/"
         if path is None or excluded_paths is None or len(excluded_paths) == 0:
             return True
         if path:
