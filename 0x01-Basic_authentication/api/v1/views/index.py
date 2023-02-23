@@ -26,8 +26,8 @@ def stats() -> str:
     return jsonify(stats)
 
 
-@app_views.route("/unauthorized", methods=['GET'])
-def non_authorized() -> str:
+@app_views.route('/unauthorized/', strict_slashes=False)
+def not_authorized() -> str:
     """ GET /api/v1/unauthorized
     Raises a 401 error
     """
