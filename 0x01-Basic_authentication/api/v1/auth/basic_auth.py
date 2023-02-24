@@ -5,4 +5,4 @@ from api.v1.auth.auth import Auth
 
 class BasicAuth(Auth):
     """ Basic Authentication inherits from Auth """
-    super.__init__(Auth)
+    super.__init__(self)
