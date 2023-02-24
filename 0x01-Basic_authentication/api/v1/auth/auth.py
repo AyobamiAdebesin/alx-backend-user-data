@@ -10,6 +10,9 @@ class Auth:
         """
         Defines which routes don't need authentication
 
+        Returns True if path is in not in excluded_paths
+        and False if path is in excluded_paths.
+
         excluded_paths contains string path always ending by a "/"
         """
         slash_tolerant = "/"
