@@ -6,6 +6,7 @@ from api.v1.auth.auth import Auth
 
 class BasicAuth(Auth):
     """ Basic Authentication inherits from Auth """
+
     def extract_base64_authorization_header(self,
                                             authorization_header: str) -> str:
         """ Extract the contents of the authorization header """
@@ -17,8 +18,10 @@ class BasicAuth(Auth):
             return
         else:
             return authorization_header.split("Basic ")[-1]
-    
-    def decode_base64_authorization_header(self, base64_authorization_header: str) -> str:
+
+    def decode_base64_authorization_header(
+            self,
+            base64_authorization_header: str) -> str:
         """ Decode the credentials """
         if base64_authorization_header is None:
             return
