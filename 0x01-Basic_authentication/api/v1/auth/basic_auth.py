@@ -62,7 +62,10 @@ class BasicAuth(Auth):
         if User.count() == 0:
             return
         else:
-            users = User.search({"email": user_email})
+            try:
+                users = User.search({"email": user_email})
+            except Exception:
+                return
             if len(users) <= 0:
                 return
             if users[0].is_valid_password(user_pwd):
