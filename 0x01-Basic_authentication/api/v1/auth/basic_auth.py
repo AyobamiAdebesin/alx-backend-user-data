@@ -48,8 +48,13 @@ class BasicAuth(Auth):
             return (None, None)
         return tuple(decoded_base64_authorization_header.split(":"))
 
-    def user_object_from_credentials(self, user_email: str, user_pwd: str) -> TypeError('User'):
-        """ Create user object from credentials passed extracted from header """
+    def user_object_from_credentials(self,
+                                     user_email: str,
+                                     user_pwd: str) -> TypeError('User'):
+        """
+        Create user object from credentials passed
+        extracted from the header
+        """
         if user_email is None or type(user_email) or type(user_email) != str:
             return
         if user_pwd is None or type(user_pwd) != str:
