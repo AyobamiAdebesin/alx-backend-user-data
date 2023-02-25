@@ -55,20 +55,30 @@ class BasicAuth(Auth):
         Create user object from credentials passed
         extracted from the header
         """
-        if user_email is None or type(user_email) != str:
-            return None
-        if user_pwd is None or type(user_pwd) != str:
-            return None
-        if User.count() == 0:
-            return None
-        else:
+        if type(user_email) == str and type(user_pwd) == str:
             try:
-                users = User.search({"email": user_email})
+                users = User.search({'email': user_email})
             except Exception:
                 return None
             if len(users) <= 0:
                 return None
-            elif users[0].is_valid_password(user_pwd):
+            if users[0].is_valid_password(user_pwd):
                 return users[0]
-            else:
-                return None
+        return None
+        # if user_email is None or type(user_email) != str:
+        #     return None
+        # if user_pwd is None or type(user_pwd) != str:
+        #     return None
+        # if User.count() == 0:
+        #     return None
+        # else:
+        #     try:
+        #         users = User.search({"email": user_email})
+        #     except Exception:
+        #         return None
+        #     if len(users) <= 0:
+        #         return None
+        #     elif users[0].is_valid_password(user_pwd):
+        #         return users[0]
+        #     else:
+        #         return None
