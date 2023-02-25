@@ -61,8 +61,6 @@ class BasicAuth(Auth):
             return
         if User.count() == 0:
             return
-        if len(User.search({"email": user_email})) == 0:
-            return None
         else:
             users = User.search({"email": user_email})
             if len(users) <= 0:
