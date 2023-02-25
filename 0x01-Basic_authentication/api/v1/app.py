@@ -47,7 +47,9 @@ def forbidden(error) -> str:
 def filter_request() -> Any:
     """
     Filter the request to retrive the
-    authentication details
+    authentication details.
+
+    This function will be triggered before each request
     """
     if auth is None:
         pass
