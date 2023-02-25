@@ -56,19 +56,19 @@ class BasicAuth(Auth):
         extracted from the header
         """
         if user_email is None or type(user_email) != str:
-            return
+            return None
         if user_pwd is None or type(user_pwd) != str:
-            return
+            return None
         if User.count() == 0:
-            return
+            return None
         else:
             try:
                 users = User.search({"email": user_email})
             except Exception:
-                return
+                return None
             if len(users) <= 0:
-                return
+                return None
             elif users[0].is_valid_password(user_pwd):
                 return users[0]
             else:
-                return
+                return None
