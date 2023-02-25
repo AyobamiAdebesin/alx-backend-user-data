@@ -15,23 +15,36 @@ class Auth:
 
         excluded_paths contains string path always ending by a "/"
         """
-        slash_tolerant = "/"
-        if path is None or excluded_paths is None or len(excluded_paths) == 0:
-            return True
-        if path:
-            if path.endswith("/"):
-                if path in excluded_paths:
+        if path is not None and excluded_paths is not None:
+            for exclusion_path in map(lambda x: x.strip(), excluded_paths):
+                pattern = ''
+                if exclusion_path[-1] == '*':
+                    pattern = '{}.*'.format(exclusion_path[0:-1])
+                elif exclusion_path[-1] == '/':
+                    pattern = '{}/*'.format(exclusion_path[0:-1])
+                else:
+                    pattern = '{}/*'.format(exclusion_path)
+                if re.match(pattern, path):
                     return False
-                elif path not in excluded_paths:
-                    return True
-            else:
-                path_slash = path+slash_tolerant
-                if path in excluded_paths or path_slash in excluded_paths:
-                    return False
-                elif path not in excluded_paths:
-                    return True
-        else:
-            return True
+        return True
+        # slash_tolerant = "/"
+        # if path is None or excluded_paths is None or\
+        # len(excluded_paths) == 0:
+        #     return True
+        # if path:
+        #     if path.endswith("/"):
+        #         if path in excluded_paths:
+        #             return False
+        #         elif path not in excluded_paths:
+        #             return True
+        #     else:
+        #         path_slash = path+slash_tolerant
+        #         if path in excluded_paths or path_slash in excluded_paths:
+        #             return False
+        #         elif path not in excluded_paths:
+        #             return True
+        # else:
+        #     return True
 
     def authorization_header(self, request=None) -> str:
         """ Returns the Authorization header in the request """
