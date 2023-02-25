@@ -68,7 +68,7 @@ class BasicAuth(Auth):
                 return
             if len(users) <= 0:
                 return
-            if users[0].is_valid_password(user_pwd):
+            elif users[0].is_valid_password(user_pwd):
                 return users[0]
             else:
                 return
