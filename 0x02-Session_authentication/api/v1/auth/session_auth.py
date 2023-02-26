@@ -22,7 +22,7 @@ class SessionAuth(Auth):
             return sess_id
         else:
             return
-    
+
     def user_id_for_session_id(self, session_id: str = None) -> str:
         """ Returns a User ID based on a Session ID """
         if type(session_id) == str:
