@@ -18,7 +18,7 @@ class SessionAuth(Auth):
         """
         if type(user_id) == str:
             sess_id = str(uuid4())
-            user_id_by_session_id[sess_id] = user_id
+            SessionAuth.user_id_by_session_id[sess_id] = user_id
             return sess_id
         else:
             return
