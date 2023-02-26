@@ -29,5 +29,5 @@ class SessionAuth(Auth):
             for k in self.user_id_by_session_id:
                 if k == session_id:
                     return self.user_id_by_session_id.get(k)
-            else:
-                return
+        else:
+            return
