@@ -6,7 +6,7 @@ from uuid import uuid4
 
 class SessionAuth(Auth):
     """ A session authentication model """
-    user_id_by_session = {}
+    user_id_by_session_id = {}
 
     def create_session(self, user_id: str = None) -> str:
         """
@@ -18,7 +18,7 @@ class SessionAuth(Auth):
         """
         if type(user_id) == str:
             sess_id = str(uuid4())
-            user_id_by_session[sess_id] = user_id
+            user_id_by_session_id[sess_id] = user_id
             return sess_id
         else:
             return
