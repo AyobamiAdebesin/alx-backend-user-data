@@ -37,7 +37,12 @@ class SessionAuth(Auth):
         """ Returns current user after authentication """
         if request:
             get_session_id_from_cookie = self.session_cookie(request)
-            get_user_id = self.user_id_by_session_id(get_session_id_from_cookie)
-            user = User.get(get_user_id)
-            return user
+            if get_session_id_from_cookie is not None and \
+                    get_session_id_from_cookie in SessionAuth().user_id_by_session_id:
+                get_user_id = self.user_id_by_session_id(
+                    get_session_id_from_cookie)
+                user = User.get(get_user_id)
+                return user
+            else:
+                return
         return
