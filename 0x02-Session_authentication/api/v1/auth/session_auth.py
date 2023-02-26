@@ -2,6 +2,7 @@
 """ A Session Authentication class """
 from .auth import Auth
 from uuid import uuid4
+from models.user import User
 
 
 class SessionAuth(Auth):
@@ -31,3 +32,12 @@ class SessionAuth(Auth):
                     return self.user_id_by_session_id.get(k)
         else:
             return
+
+    def current_user(self, request=None) -> User:
+        """ Returns current user after authentication """
+        if request:
+            get_session_id_from_cookie = self.session_cookie(request)
+            get_user_id = self.user_id_by_session_id(get_session_id_from_cookie)
+            user = User.get(get_user_id)
+            return user
+        return
