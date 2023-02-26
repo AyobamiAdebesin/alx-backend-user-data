@@ -58,12 +58,12 @@ class Auth:
         """ Returns current user for a request """
         return None
 
-    def session_cookie(self, request=None) -> request.cookies:
+    def session_cookie(self, request=None):
         """ Returns a cookie value from a request """
         sess_name = os.getenv('SESSION_NAME')
         if request:
             if sess_name == '_my_session_id':
-                get_cookie = request.cookies.get('_my_session_id')
+                get_cookie = request.cookies.get(sess_name)
                 return get_cookie
         else:
             return
