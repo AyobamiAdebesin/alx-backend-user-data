@@ -65,5 +65,7 @@ class Auth:
             if sess_name == '_my_session_id':
                 get_cookie = request.cookies.get(sess_name)
                 return get_cookie
+            else:
+                return
         else:
             return
