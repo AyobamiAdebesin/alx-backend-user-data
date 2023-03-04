@@ -9,10 +9,11 @@ class Auth:
     """ Authentication class for the API """
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """
-        Defines which routes don't need authentication
+        Checks which routes don't need authentication
 
-        Returns True if path is in not in excluded_paths
-        and False if path is in excluded_paths.
+        Returns True if path is None,
+        Returns True if excluded_paths is None or empty
+        Returns False if path is in excluded_paths
 
         excluded_paths contains string path always ending by a "/"
         """
