@@ -28,7 +28,7 @@ class SessionAuth(Auth):
         """ Returns a User ID based on a Session ID """
         if type(session_id) == str:
             if session_id in self.user_id_by_session_id:
-                    return self.user_id_by_session_id.get(session_id)
+                return self.user_id_by_session_id.get(session_id)
         else:
             return
 
