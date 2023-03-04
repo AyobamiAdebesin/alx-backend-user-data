@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-""" A module containing functions for filtering logs """
+"""
+A module containing functions for filtering logs
+
+This module uses custom utility functions to read, write and
+format PII (Personally Identifiable Information) data from
+"user_data.csv" file into a database. The PII information contained
+inside the data has been redacted.
+"""
 import os
 import re
 import logging
@@ -23,12 +30,16 @@ def filter_datum(
 
 
 def get_logger() -> logging.Logger:
-    """Creates a new logger for user data.
     """
-    logger = logging.getLogger("user_data")
-    stream_handler = logging.StreamHandler()
-    stream_handler.setFormatter(RedactingFormatter(PII_FIELDS))
+    Creates a new logger for user data and returns
+    the logger object
+    """
+    logger = logging.getLogger('user_data')
     logger.setLevel(logging.INFO)
+
+    formatter = logging.Formatter(RedactingFormatter(PII_FIELDS))
+    stream_handler = logging.StreamHandler()
+    stream_handler.setFormatter(formatter)
     logger.propagate = False
     logger.addHandler(stream_handler)
     return logger
