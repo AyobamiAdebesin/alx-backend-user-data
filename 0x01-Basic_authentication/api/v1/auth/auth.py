@@ -49,7 +49,10 @@ class Auth:
         #     return True
 
     def authorization_header(self, request=None) -> str:
-        """ Returns the Authorization header in the request """
+        """
+        Returns the Authorization header key in the request
+        If the Authorization header key does not exist, return None
+        """
         if request is not None:
             return request.headers.get('Authorization', None)
         return None

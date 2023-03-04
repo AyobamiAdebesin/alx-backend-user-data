@@ -49,7 +49,8 @@ def filter_request() -> Any:
     Filter the request to retrive the
     authentication details.
 
-    This function will be triggered before each request
+    This function will be triggered before each request is treated.
+    
     """
     if auth is None:
         pass
