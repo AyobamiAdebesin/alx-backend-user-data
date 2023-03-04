@@ -15,7 +15,7 @@ class SessionAuth(Auth):
 
         This session id is stored as a key in the user_id_by_session
         dict with the user_id as a value. This is because a user_id can have
-        multiple session id
+        multiple session id's(Why?)
         """
         if type(user_id) == str:
             sess_id = str(uuid4())
@@ -27,9 +27,8 @@ class SessionAuth(Auth):
     def user_id_for_session_id(self, session_id: str = None) -> str:
         """ Returns a User ID based on a Session ID """
         if type(session_id) == str:
-            for k in self.user_id_by_session_id:
-                if k == session_id:
-                    return self.user_id_by_session_id.get(k)
+            if session_id in self.user_id_by_session_id:
+                    return self.user_id_by_session_id.get(session_id)
         else:
             return
 
