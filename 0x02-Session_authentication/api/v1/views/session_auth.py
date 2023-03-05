@@ -24,7 +24,8 @@ def login() -> Any:
         return jsonify({"error": "wrong password"}), 401
     else:
         from api.v1.app import auth
-        sess_id = auth.create_session()
+        sess_id = auth.create_session(user_id=users[0].id)
         response = jsonify(users[0].to_json())
-        response.set_cookie(getenv('SESSION_NAME'), sess_id)
+        cookie_name = getenv('SESSION_NAME')
+        response.set_cookie(cookie_name, sess_id)
         return response
