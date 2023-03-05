@@ -4,17 +4,18 @@ from flask import jsonify, request, abort
 from api.v1.views import app_views
 from models.user import User
 from os import getenv
+from typing import Any
 
 
-@app_views.route("/auth_session/login/", strict_slashes= False, methods=['POST'])
-def login() -> str:
+@app_views.route("/auth_session/login", strict_slashes= False, methods=['POST'])
+def login() -> Any:
     """ Login functionality """
     user_email = request.form.get('email')
     user_password = request.form.get('password')
 
-    if email is None:
+    if user_email is None:
         return jsonify({"error": "email missing"}), 400
-    if password is None:
+    if user_password is None:
         return jsonify({"error": "password is None"}), 400
     user = User.search({"email": user_email})
     if len(user) == 0:
