@@ -5,8 +5,10 @@ from api.v1.auth.session_auth import SessionAuth
 from os import getenv
 from datetime import datetime, timedelta
 
+
 class SessionExpAuth(SessionAuth):
     """ Adding expiration to Session Authentication """
+
     def __init__(self):
         """ Overloads and initializes attributes """
         if getenv('SESSION_DURATION') is not None:
@@ -14,10 +16,10 @@ class SessionExpAuth(SessionAuth):
         else:
             session_duration = 0
         self.session_duration = session_duration
-    
+
     def create_session(self, user_id=None):
         """ Creates a session """
-        sess_id  = super().create_session(user_id)
+        sess_id = super().create_session(user_id)
         if sess_id is None:
             return None
         session_dictionary = {'user_id': user_id, 'created_at': datetime.now()}
@@ -40,4 +42,3 @@ class SessionExpAuth(SessionAuth):
         if allowed_window < datetime.now():
             return None
         return user_details.get("user_id")
-        
